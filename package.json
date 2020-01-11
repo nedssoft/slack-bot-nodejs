@@ -1,0 +1,9 @@
+{
+  "name": "slack-bot-nodejs",
+  "version": "1.0.0",
+  "description": "A simple nodejs app to demo building slack bot",
+  "main": "index.js",
+  "repository": "git@github.com:nedssoft/slack-bot-nodejs.git",
+  "author": "Chinedu Orie <nedsoftdeveloper@gmail.com>",
+  "license": "MIT"
+}
