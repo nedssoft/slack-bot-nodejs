@@ -6,9 +6,16 @@
   "repository": "git@github.com:nedssoft/slack-bot-nodejs.git",
   "author": "Chinedu Orie <nedsoftdeveloper@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "dependencies": {
+    "@slack/web-api": "^5.6.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
