@@ -8,9 +8,8 @@ const token = process.env.SLACK_TOKEN;
 // Initialize
 const web = new WebClient(token, { retries: 0 });
 
-router.post('/slack/commands/sign-in', (req, res) => {
-  console.log(req.body);
-
+router.post('/slack/command/sign-in', (req, res) => {
+    
   const { trigger_id: triggerId } = req.body;
   (async () => {
     // Open a modal.
@@ -78,8 +77,19 @@ router.post('/slack/commands/sign-in', (req, res) => {
   })();
 });
 
+
 router.post('/slack/interactions', (req, res) => {
-  //
+  const payload = JSON.parse(req.body.payload);
+
+  res.status(200).send({ response_action: 'clear' });
+
+  const { values } = payload.view.state;
+  const title = values.title.title.value
+  const description = values.description.description.value
+
+  console.log(title, description);
+
+  
 });
 
 module.exports = router;
