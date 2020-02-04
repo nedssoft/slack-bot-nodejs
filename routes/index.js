@@ -8,12 +8,12 @@ const token = process.env.SLACK_TOKEN;
 // Initialize
 const web = new WebClient(token, { retries: 0 });
 
-router.post('/slack/command/sign-in', (req, res) => {
-    
+router.post('/slack/frontdesk', (req, res) => {
   const { trigger_id: triggerId } = req.body;
+
+  res.status(200).send('');
   (async () => {
     // Open a modal.
-    // Find more arguments and details of the response: https://api.slack.com/methods/views.open
     await web.views.open({
       trigger_id: triggerId,
       view: {
@@ -26,7 +26,7 @@ router.post('/slack/command/sign-in', (req, res) => {
           type: 'plain_text',
           text: 'Submit',
         },
-        notify_on_close: true,
+        callback_id: 'frontdesk',
         blocks: [
           {
             type: 'section',
@@ -39,7 +39,7 @@ router.post('/slack/command/sign-in', (req, res) => {
           {
             type: 'divider',
           },
-         
+
           {
             type: 'input',
             block_id: 'title',
@@ -72,24 +72,28 @@ router.post('/slack/command/sign-in', (req, res) => {
         ],
       },
     });
-
-    res.status(200).send('yara');
   })();
 });
 
-
 router.post('/slack/interactions', (req, res) => {
+
+  res.status(200).send();
+
   const payload = JSON.parse(req.body.payload);
 
-  res.status(200).send({ response_action: 'clear' });
+  // view the payload on console
+  console.log(payload);
 
-  const { values } = payload.view.state;
-  const title = values.title.title.value
-  const description = values.description.description.value
+  if (
+    payload.type === 'view_submission' &&
+    payload.view.callback_id === 'frontdesk'
+  ) {
+    const { values } = payload.view.state;
+    const title = values.title.title.value;
+    const description = values.description.description.value;
 
-  console.log(title, description);
-
-  
+    console.log(`title ----->${title}`, `description---->${description}`);
+  }
 });
 
 module.exports = router;
